@@ -73,7 +73,7 @@ class Transfers extends CI_Controller {
 	{
 		if($this->session->userdata('is_logged'))
 		{
-			$response = file_get_contents("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=$lat1,$lon1&destinations=$lat2,$lon2&key=AIzaSyDG_pi6EPRdsa9iU-2eGW8FUXCUDD5eB48");
+			$response = file_get_contents("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=$lat1,$lon1&destinations=$lat2,$lon2&key=YOUR_API_KEY");
 			$arr = json_decode($response, true);
 
 			$data = $this->getDashboardTemplate();
