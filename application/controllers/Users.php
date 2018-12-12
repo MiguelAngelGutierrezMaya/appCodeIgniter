@@ -382,6 +382,7 @@ class Users extends CI_Controller {
 								'is_logged' => true,
 							)
 						);
+						
 						echo json_encode(array('url' => base_url('users/home')));
 					}
 					else

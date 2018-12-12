@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://192.168.0.21/appCodeIgniter/';
-//$config['base_url'] = 'http://localhost/appCodeIgniter/';
+//$config['base_url'] = 'http://192.168.0.21/appCodeIgniter/';
+$config['base_url'] = 'http://localhost/appCodeIgniter/';
 
 /*
 |--------------------------------------------------------------------------

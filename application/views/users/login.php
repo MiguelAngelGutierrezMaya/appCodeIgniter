@@ -107,6 +107,11 @@
             </div>
         </div>
     </div>
+
+    <!-- Animaciones con wow js (depende de animated.css y se debe crear el objeto en js) -->
+    <!--<div class="wowload rollIn" style="text-align: center;">
+        <h2>Esto es una prueba</h2>
+    </div>-->
     <?= $script ?>
     <script type="text/javascript" src="<?php echo base_url();?>assets/js/users/login.js"></script>
 </body>

@@ -70,6 +70,9 @@
 <!-- dropzone JS -->
 <script src="<?php echo base_url();?>assets/js/dropzone/dropzone.js"></script>
 
+<!-- wow JS -->
+<script src="<?php echo base_url();?>assets/js/wow.min.js"></script>
+
 <!-- tab JS -->
 <script src="<?php echo base_url();?>assets/js/tab.js"></script>
 

@@ -99,4 +99,9 @@
         preloader CSS
     */
     echo link_tag('assets/css/preloader.css');
+
+    /*
+        animate CSS
+    */
+    echo link_tag('assets/css/animate.css');
 ?>
