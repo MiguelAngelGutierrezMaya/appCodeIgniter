@@ -199,8 +199,24 @@ class Auth extends CI_Controller {
 			else
 			{
 				$secret = ''; //secret_key captcha
-				$response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$captcha");
-				$request_captcha = json_decode($response, true);
+				//$response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$captcha");
+
+				//url contra la que atacamos
+				$ch = curl_init("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$captcha");
+				//a true, obtendremos una respuesta de la url, en otro caso, 
+				//true si es correcto, false si no lo es
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				//establecemos el verbo http que queremos utilizar para la petición
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+				//obtenemos la respuesta
+				$response = curl_exec($ch);
+				// Se cierra el recurso CURL y se liberan los recursos del sistema
+				curl_close($ch);
+
+				if($response){
+
+					$request_captcha = json_decode($response, true);
+				
 
 				if($request_captcha['success'] == true)
 				{
@@ -230,6 +246,10 @@ class Auth extends CI_Controller {
 				{
 					$this->error_401('Por favor verifica el captcha (sin modificar)');
 				}
+			 }else{
+				 $this->error_401('Un error al hacer la peticion de validacion del captcha');
+			 }
+
 			}
 		}
 	}
