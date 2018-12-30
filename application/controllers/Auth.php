@@ -80,6 +80,32 @@ class Auth extends CI_Controller {
 		}
 	}
 
+	/*
+		auth recover_password view
+	*/
+	public function recover_password($token_password,$token)
+	{
+		if($this->session->userdata('is_logged'))
+		{
+			redirect('home');
+		}
+		else
+		{
+			if($this->User->verify_token($token_password,$token))
+			{
+				$data = $this->getLoginTemplate();
+				$data['token'] = $token;
+				$data['token_password'] = $token_password;
+				$this->load->view('auth/recover_password',$data);
+			}
+			else
+			{
+				$this->session->set_flashdata('msj', 'Error. La informacion suministrada ya se utilizo o se encuentra incorrecta,alert-danger');
+				redirect('auth/login');
+			}
+		}
+	}
+
 	/**
 		Auth Methods
 	**/
@@ -115,19 +141,19 @@ class Auth extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->json_errors(array('username' => form_error('username'),'password' => form_error('password')),400);
+			$this->json_errors(array('username' => form_error('username'),'password' => form_error('password'), 'key' => 1),409);
 		}
 		else
 		{
 			if(!$request = $this->User->login($this->input->post('username'),$this->input->post('password')))
 			{
-				$this->error_401('El usuario no se encuentra en nuestros registros, por favor verifique sus creenciales');
+				$this->json_errors(array('msj' => 'El usuario no se encuentra en nuestros registros, por favor verifique sus creenciales', 'key' => 2),409);
 			}
 			else
 			{
 				if(!$last_session = $this->User->set_last_session($request->id))
 				{
-					$this->error_401('A ocurrido un error inesperado con last_session');
+					$this->json_errors(array('msj' => 'A ocurrido un error inesperado con last_session', 'key' => 2),409);
 				}
 				else
 				{
@@ -149,7 +175,7 @@ class Auth extends CI_Controller {
 					}
 					else
 					{
-						$this->error_401('El usuario no se encuentra activo');
+						$this->json_errors(array('msj' => 'El usuario no se encuentra activo', 'key' => 2),409);
 					}
 				}
 			}
@@ -174,9 +200,10 @@ class Auth extends CI_Controller {
 					'username' => form_error('username'),
 					'email' => form_error('email'),
 					'password' => form_error('password'),
-					'confirm_password' => form_error('confirm_password')
+					'confirm_password' => form_error('confirm_password'),
+					'key' => 1
 				),
-				400
+				409
 			);
 		}
 		else
@@ -194,13 +221,26 @@ class Auth extends CI_Controller {
 
 			if(!$captcha)
 			{
-				$this->error_401('Por favor revisar el captcha');
+				$this->json_errors(array('msj' => 'Por favor revisar el captcha', 'key' => 2),409);
 			}
 			else
 			{
-				$secret = ''; //secret_key captcha
-				$response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$captcha");
+				$secret = '6Le5m1IUAAAAAGEH1RTgnkWROzwHGOOxJlFJB84L'; //secret_key captcha
+				//$response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$captcha");
+				//url contra la que atacamos
+				$ch = curl_init("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$captcha");
+				//a true, obtendremos una respuesta de la url, en otro caso, 
+				//true si es correcto, false si no lo es
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				//establecemos el verbo http que queremos utilizar para la petición
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+				//obtenemos la respuesta
+				$response = curl_exec($ch);
+				// Se cierra el recurso CURL y se liberan los recursos del sistema
+				curl_close($ch);
+
 				$request_captcha = json_decode($response, true);
+
 
 				if($request_captcha['success'] == true)
 				{
@@ -223,12 +263,12 @@ class Auth extends CI_Controller {
 					}
 					else
 					{
-						$this->error_401('El usuario no pudo ser creado. por favor, intente nuevamente');
+						$this->json_errors(array('msj' => 'El usuario no pudo ser creado. por favor, intente nuevamente', 'key' => 2),409);
 					}
 				}
 				else
 				{
-					$this->error_401('Por favor verifica el captcha (sin modificar)');
+					$this->json_errors(array('msj' => 'Por favor verifica el captcha (sin modificar)', 'key' => 2),409);
 				}
 			}
 		}
@@ -243,7 +283,7 @@ class Auth extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->error_401(form_error('email'));
+			$this->json_errors(array('email' => form_error('email'), 'key' => 1),409);
 		}
 		else
 		{
@@ -273,38 +313,12 @@ class Auth extends CI_Controller {
 				}
 				else
 				{
-					$this->error_401('Error al recuperar la contraseña, comunicarse con el admin');
+					$this->json_errors(array('msj' => 'Error al recuperar la contraseña, comunicarse con el admin', 'key' => 2),409);
 				}
 			}
 			else
 			{
-				$this->error_401('El email ingresado no se encuentra registrado');
-			}
-		}
-	}
-
-	/*
-		users recover_password view
-	*/
-	public function recover_password($token_password,$token)
-	{
-		if($this->session->userdata('is_logged'))
-		{
-			redirect('home');
-		}
-		else
-		{
-			if($this->User->verify_token($token_password,$token))
-			{
-				$data = $this->getLoginTemplate();
-				$data['token'] = $token;
-				$data['token_password'] = $token_password;
-				$this->load->view('auth/recover_password',$data);
-			}
-			else
-			{
-				$this->session->set_flashdata('msj', 'Error. La informacion suministrada ya se utilizo o se encuentra incorrecta,alert-danger');
-				redirect('auth/login');
+				$this->json_errors(array('msj' => 'El email ingresado no se encuentra registrado', 'key' => 2),409);
 			}
 		}
 	}
@@ -321,9 +335,10 @@ class Auth extends CI_Controller {
 			$this->json_errors(
 				array(
 					'password' => form_error('password'),
-					'confirm_password' => form_error('confirm_password')
+					'confirm_password' => form_error('confirm_password'),
+					'key' => 1
 				),
-				400
+				409
 			);
 		}
 		else
@@ -345,12 +360,12 @@ class Auth extends CI_Controller {
 				}
 				else
 				{
-					$this->error_401('Error. La contraseña no se pudo modificar');
+					$this->json_errors(array('msj' => 'Error. La contraseña no se pudo modificar', 'key' => 2),409);
 				}
 			}
 			else
 			{
-				$this->error_401('Error, el token de usuario no se encuentra registrado');
+				$this->json_errors(array('msj' => 'Error, el token de usuario no se encuentra registrado', 'key' => 2),409);
 			}
 		}
 	}
@@ -382,15 +397,6 @@ class Auth extends CI_Controller {
 		$this->output->set_status_header($number);
 		echo json_encode($array);
 		
-    }
-
-    /*
-		json error 401
-    */
-    private function error_401($msj)
-    {
-    	$this->output->set_status_header(401);
-        echo json_encode(array('msj' => $msj));
     }
 
     /*

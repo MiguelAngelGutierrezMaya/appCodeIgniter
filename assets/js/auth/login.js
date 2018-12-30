@@ -25,37 +25,36 @@
 			},
 			statusCode: 
 			{
-				400: function(xhr)
+				409: function(xhr)
 				{
 					hide_components();
 
-					var user = JSON.parse(xhr.responseText);
+					var json = JSON.parse(xhr.responseText);
 
-					if(user.username.length != 0)
+					if(json.key == 1)
 					{
-						$("#username").attr('class', 'form-group-inner input-with-error');
-						$("#username > span").html(user.username).removeAttr("style");
+						if(json.username.length != 0)
+						{
+							$("#username").attr('class', 'form-group-inner input-with-error');
+							$("#username > span").html(json.username).removeAttr("style");
+						}
+						if(json.password.length != 0)
+						{
+							$("#password").attr('class', 'form-group-inner input-with-error');
+							$("#password > span").html(json.password).removeAttr("style");
+						}
 					}
-					if(user.password.length != 0)
+					if(json.key == 2)
 					{
-						$("#password").attr('class', 'form-group-inner input-with-error');
-						$("#password > span").html(user.password).removeAttr("style");
+						if(json.msj.length != 0)
+						{
+							$("#error").
+								html(
+									'<div class="alert alert-danger" role="alert"><button id="button-error" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span>'+ json.msj +'</span></div>'
+								);
+						}
 					}
-				},
-				401: function(xhr)
-				{
-					hide_components();
-
-					var user = JSON.parse(xhr.responseText);
-					
-					if(user.msj.length != 0)
-					{
-						$("#error").
-							html(
-								'<div class="alert alert-danger" role="alert"><button id="button-error" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span>'+ user.msj +'</span></div>'
-							);
-					}
-				},
+				}
 			} 
 		});
 	});

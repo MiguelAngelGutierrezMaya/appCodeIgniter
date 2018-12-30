@@ -32,37 +32,34 @@
 			},
 			statusCode: 
 			{
-				400: function(xhr)
+				409: function(xhr)
 				{
 					hide_components(0);
 
-					var user = JSON.parse(xhr.responseText);
+					var json = JSON.parse(xhr.responseText);
 
-					if(user.password.length != 0)
+					if(json.key == 1)
 					{
-						$("#password").attr('class', 'form-group-inner input-with-error col-lg-12');
-						$("#password > span").html(user.password).removeAttr("style");
+						if(json.password.length != 0)
+						{
+							$("#password").attr('class', 'form-group-inner input-with-error col-lg-12');
+							$("#password > span").html(json.password).removeAttr("style");
+						}
+						if(json.confirm_password.length != 0)
+						{
+							$("#confirm_password").attr('class', 'form-group-inner input-with-error col-lg-12');
+							$("#confirm_password > span").html(json.confirm_password).removeAttr("style");
+						}
 					}
-					if(user.confirm_password.length != 0)
-					{
-						$("#confirm_password").attr('class', 'form-group-inner input-with-error col-lg-12');
-						$("#confirm_password > span").html(user.confirm_password).removeAttr("style");
-					}
-				},
-				401: function(xhr)
-				{
-					hide_components(0);
 
-					var user = JSON.parse(xhr.responseText);
-					
-					if(user.msj.length != 0)
+					if(json.key == 2)
 					{
 						$("#error").
 							html(
-								'<div class="alert alert-danger" role="alert"><button id="button-error" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span>'+ user.msj +'</span></div>'
+								'<div class="alert alert-danger" role="alert"><button id="button-error" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span>'+ json.msj +'</span></div>'
 							);
 					}
-				},
+				}
 			} 
 		});
 	});

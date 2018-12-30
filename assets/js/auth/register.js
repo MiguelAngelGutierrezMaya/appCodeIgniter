@@ -39,61 +39,58 @@
 			},
 			statusCode: 
 			{
-				400: function(xhr)
+				409: function(xhr)
 				{
 					hide_components(0);
 
-					var user = JSON.parse(xhr.responseText);
+					var json = JSON.parse(xhr.responseText);
 
-					if(user.first_name.length != 0)
+					if(json.key == 1)
 					{
-						$("#first_name").attr('class', 'form-group-inner input-with-error col-lg-12');
-						$("#first_name > span").html(user.first_name).removeAttr("style");
+						if(json.first_name.length != 0)
+						{
+							$("#first_name").attr('class', 'form-group-inner input-with-error col-lg-12');
+							$("#first_name > span").html(json.first_name).removeAttr("style");
+						}
+						if(json.last_name.length != 0)
+						{
+							$("#last_name").attr('class', 'form-group-inner input-with-error col-lg-12');
+							$("#last_name > span").html(json.last_name).removeAttr("style");
+						}
+						if(json.username.length != 0)
+						{
+							$("#username").attr('class', 'form-group-inner input-with-error col-lg-12');
+							$("#username > span").html(json.username).removeAttr("style");
+						}
+						if(json.email.length != 0)
+						{
+							$("#email").attr('class', 'form-group-inner input-with-error col-lg-12');
+							$("#email > span").html(json.email).removeAttr("style");
+						}
+						if(json.password.length != 0)
+						{
+							$("#container_password").attr('class', 'form-group-inner input-with-error col-lg-12');
+							$("#password > span").html(json.password).removeAttr("style");
+						}
+						if(json.confirm_password.length != 0)
+						{
+							$("#container_password").attr('class', 'form-group-inner input-with-error col-lg-12');
+							$("#confirm_password > span").html(json.confirm_password).removeAttr("style");
+						}
 					}
-					if(user.last_name.length != 0)
-					{
-						$("#last_name").attr('class', 'form-group-inner input-with-error col-lg-12');
-						$("#last_name > span").html(user.last_name).removeAttr("style");
-					}
-					if(user.username.length != 0)
-					{
-						$("#username").attr('class', 'form-group-inner input-with-error col-lg-12');
-						$("#username > span").html(user.username).removeAttr("style");
-					}
-					if(user.email.length != 0)
-					{
-						$("#email").attr('class', 'form-group-inner input-with-error col-lg-12');
-						$("#email > span").html(user.email).removeAttr("style");
-					}
-					if(user.password.length != 0)
-					{
-						$("#container_password").attr('class', 'form-group-inner input-with-error col-lg-12');
-						$("#password > span").html(user.password).removeAttr("style");
-					}
-					if(user.confirm_password.length != 0)
-					{
-						$("#container_password").attr('class', 'form-group-inner input-with-error col-lg-12');
-						$("#confirm_password > span").html(user.confirm_password).removeAttr("style");
-					}
-				},
-				401: function(xhr)
-				{
-					hide_components(0);
 
-					var user = JSON.parse(xhr.responseText);
-					
-					if(user.msj.length != 0)
+					if(json.key == 2)
 					{
 						$("#error").
 							html(
-								'<div class="alert alert-danger" role="alert"><button id="button-error" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span>'+ user.msj +'</span></div>'
+								'<div class="alert alert-danger" role="alert"><button id="button-error" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span>'+ json.msj +'</span></div>'
 							);
-
+								
 						$("#google-recaptcha").attr('class', 'form-group-inner input-with-error col-lg-12');
-						$("#google-recaptcha > span").html(user.msj).removeAttr("style");
+						$("#google-recaptcha > span").html(json.msj).removeAttr("style");
 						$("#google-recaptcha > span").css("color", "red");
 					}
-				},
+				}
 			} 
 		});
 	});
