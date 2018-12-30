@@ -225,8 +225,9 @@ class Auth extends CI_Controller {
 			}
 			else
 			{
-				$secret = '6Le5m1IUAAAAAGEH1RTgnkWROzwHGOOxJlFJB84L'; //secret_key captcha
+				$secret = ''; //secret_key captcha
 				//$response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$captcha");
+
 				//url contra la que atacamos
 				$ch = curl_init("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$captcha");
 				//a true, obtendremos una respuesta de la url, en otro caso, 
@@ -239,36 +240,42 @@ class Auth extends CI_Controller {
 				// Se cierra el recurso CURL y se liberan los recursos del sistema
 				curl_close($ch);
 
-				$request_captcha = json_decode($response, true);
-
-
-				if($request_captcha['success'] == true)
+				if($response)
 				{
-					$data['state'] = 0;
+					$request_captcha = json_decode($response, true);
 
-					if($this->User->create($data))
+					if($request_captcha['success'] == true)
 					{
-						$data['password'] = $this->input->post('password');
+						$data['state'] = 0;
 
-						if($this->Email->sendRegisterEmail('miguel.gutierrez@correounivalle.edu.co', 'Miguel Gutierrez', $data['email'], 'Registro de usuarios', $data))
+						if($this->User->create($data))
 						{
-							$this->session->set_flashdata('msj', 'El registro ha sido guardado se ha enviado un email al correo ingresado para activar cuenta,alert-success');
+							$data['password'] = $this->input->post('password');
+
+							if($this->Email->sendRegisterEmail('miguel.gutierrez@correounivalle.edu.co', 'Miguel Gutierrez', $data['email'], 'Registro de usuarios', $data))
+							{
+								$this->session->set_flashdata('msj', 'El registro ha sido guardado se ha enviado un email al correo ingresado para activar cuenta,alert-success');
+							}
+							else
+							{
+								$this->session->set_flashdata('msj', 'El registro ha sido guardado por favor solicite al admin la activacion de su cuenta,alert-warning');
+							}
+
+							$this->json_success(base_url('auth/login'));
 						}
 						else
 						{
-							$this->session->set_flashdata('msj', 'El registro ha sido guardado por favor solicite al admin la activacion de su cuenta,alert-warning');
+							$this->json_errors(array('msj' => 'El usuario no pudo ser creado. por favor, intente nuevamente', 'key' => 2),409);
 						}
-
-						$this->json_success(base_url('auth/login'));
 					}
 					else
 					{
-						$this->json_errors(array('msj' => 'El usuario no pudo ser creado. por favor, intente nuevamente', 'key' => 2),409);
+						$this->json_errors(array('msj' => 'Por favor verifica el captcha (sin modificar)', 'key' => 2),409);
 					}
 				}
 				else
 				{
-					$this->json_errors(array('msj' => 'Por favor verifica el captcha (sin modificar)', 'key' => 2),409);
+					$this->error_401('Un error al hacer la peticion de validacion del captcha');
 				}
 			}
 		}
