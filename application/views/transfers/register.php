@@ -145,7 +145,7 @@
 	    </script>
 	    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 	    <script async defer
-	    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDG_pi6EPRdsa9iU-2eGW8FUXCUDD5eB48&callback=initMap">
+	    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
 	    </script>
 	</body>
 </html>
