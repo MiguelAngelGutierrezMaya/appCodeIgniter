@@ -18,7 +18,7 @@
 		event.preventDefault();
 
 		$.ajax({
-			'url': '../users/validate_recover',
+			'url': 'validate_recover',
 			'type': 'POST',
 			'data': $(this).serialize(),
 			success: function(data)

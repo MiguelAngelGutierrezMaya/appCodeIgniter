@@ -14,7 +14,7 @@
 		event.preventDefault();
 
 		$.ajax({
-			'url': 'http://localhost/appCodeIgniter/users/validate',
+			'url': 'auth_validate',
 			'type': 'POST',
 			'data': $(this).serialize(),
 			success: function(data)
@@ -61,7 +61,7 @@
 	});
 })(jQuery)
 
-var wow = new WOW(
+/*var wow = new WOW(
     {
         boxClass: 'wowload', // animated element css class (default is wow)
         animateClass: 'animated', // animation css class (default is animated)
@@ -70,4 +70,4 @@ var wow = new WOW(
         live: true        // act on asynchronously loaded content (default is true)
     }
 );
-wow.init();
+wow.init();*/

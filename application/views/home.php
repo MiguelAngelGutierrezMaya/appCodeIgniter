@@ -75,16 +75,6 @@
 		                                <p><?= $this->session->first_name.' '.$this->session->last_name ?></p>
 		                                <?php
 											$path = './assets/files/'.$this->session->id.'/';
-											if(file_exists($path) and $files !== false):
-												foreach ($files as $row) :
-										?>
-												<div>
-													<a href="<?php echo '../'.$row->url; ?>">Ver</a><?php echo ' - '.$row->file_name.' - ' ?>
-													<a href="<?php echo base_url('files/delete/'.$row->id.'/'.$this->session->id); ?>">Eliminar</a>
-												</div>
-										<?php 
-												endforeach;
-											endif ;
 										?>
 		                            </div>
 	                            </div>

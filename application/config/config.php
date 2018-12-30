@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-//$config['base_url'] = 'http://192.168.0.21/appCodeIgniter/';
-$config['base_url'] = 'http://localhost/appCodeIgniter/';
+//$config['base_url'] = 'http://subdomain.sandboxprojectonline.com';
+$config['base_url'] = 'http://localhost/appCodeIgniter';
 
 /*
 |--------------------------------------------------------------------------
@@ -79,7 +79,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'english';
+$config['language']	= 'spanish';
 
 /*
 |--------------------------------------------------------------------------
@@ -163,7 +163,7 @@ $config['composer_autoload'] = FALSE;
 | Note: This option is ignored for CLI requests.
 |
 */
-$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-!,+';
 
 /*
 |--------------------------------------------------------------------------
@@ -315,7 +315,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'appCodeIgniter';
 
 /*
 |--------------------------------------------------------------------------

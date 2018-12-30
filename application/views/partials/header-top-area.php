@@ -32,7 +32,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="<?php echo base_url('users/logout'); ?>">
+                                                <a href="<?php echo base_url('auth/logout'); ?>">
                                                     <span class="fa fa-sign-in author-log-ic"></span>Salir
                                                 </a>
                                             </li>

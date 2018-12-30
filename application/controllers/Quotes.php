@@ -42,17 +42,16 @@ class Quotes extends CI_Controller {
 	*/
 	public function index($bg = null)
 	{
-		if($this->session->userdata('is_logged') and $this->session->type == 5)
+		if($this->session->userdata('is_logged'))
 		{
 			$data = $this->getDashboardTemplate();
-			//$data['quote_create'] = $this->load->view('partials/quotes/create','',true);
 			$data['quotes'] = $this->Quote->index();
 			$this->load->view('quotes/index',$data);
 		}
 		else
 		{
 			//show_404();
-			redirect('users/login');
+			redirect('auth/login');
 		}
 	}
 
@@ -70,7 +69,7 @@ class Quotes extends CI_Controller {
 		}
 		else
 		{
-			redirect('users/login');
+			redirect('auth/login');
 		}
 	}
 

@@ -1,21 +1,4 @@
 <?php
-	if(!function_exists('main_menu'))
-	{
-		function main_menu()
-		{
-			return array(
-				array(
-					'title' => 'Login',
-					'url' => base_url('users/login'),
-				),
-				array(
-					'title' => 'Registro',
-					'url' => base_url('users/register'),
-				),
-			);
-		}
-	}
-	
 	if(!function_exists('menu'))
 	{
 		function menu()

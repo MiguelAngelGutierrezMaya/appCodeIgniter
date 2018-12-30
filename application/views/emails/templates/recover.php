@@ -1482,7 +1482,7 @@ body.outlook p {
                                         <td>
                                           <table>
                                             <tr>
-                                              <td><a href="<?php echo base_url('users/recover_password/'.$token_password.'/'.$token) ?>">Recuperar Contrase&ntildea</a></td>
+                                              <td><a href="<?php echo base_url('auth/recover_password/'.$token_password.'/'.$token) ?>">Recuperar Contrase&ntildea</a></td>
                                             </tr>
                                           </table>
                                         </td>
@@ -1493,7 +1493,7 @@ body.outlook p {
                                         <td>
                                           <table>
                                             <tr>
-                                              <th class="menu-item float-center">Si el enlace no funciona por favor copiar el siguiente texto en la url de su navegador: <?php echo base_url('users/recover_password/'.$token_password.'/'.$token) ?></th>
+                                              <th class="menu-item float-center">Si el enlace no funciona por favor copiar el siguiente texto en la url de su navegador: <?php echo base_url('auth/recover_password/'.$token_password.'/'.$token) ?></th>
                                             </tr>
                                           </table>
                                         </td>

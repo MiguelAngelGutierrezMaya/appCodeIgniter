@@ -2,7 +2,7 @@
 <html>
 <head>
 	<?= $meta ?>
-    <title>AppCI | Login</title>
+    <title>AppCI | Recupera</title>
     <?= $favicon ?>
 
     <!-- Google Fonts -->
@@ -51,49 +51,44 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"></div>
             <div class="col-md-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="text-center m-b-md custom-login">
-                    <h3>Login</h3>
+                    <h3>Recuperar Contraseña</h3>
                 </div>
                 <div class="hpanel">
                     <div class="panel-body">
-                        <?php if($msj = $this->session->flashdata('msj')): ?>
-                        <?php $msj_ex = explode(",", $msj); ?>
-                        <div id="alert" class="alert <?php echo $msj_ex[1]; ?>" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <span><?php echo $msj_ex[0]; ?></span>
-                        </div>
-                        <?php endif; ?>
                         <div id="error"></div>
                         <?php
-							echo form_open('users/validate',array('method' => 'post', 'id' => 'loginForm'));
+							echo form_open('auth/validate_recover_password',array('method' => 'post', 'id' => 'loginForm'));
 						?>
-                            <div class="form-group" id="username">
-                            	<?php
-									echo form_label('Login','username', array('class' => 'control-label'));
-									echo form_input(array('type' => 'text', 'name' => 'username', 'placeholder' => 'Username o email', 'class' => 'form-control', 'class' => 'form-control', 'required', 'value' => set_value('username')));
-								?>
-                                <span class="text-danger" style="display: none;"></span>
+                            <div class="form-group col-lg-12">
+                                <input type="hidden" name="token" value="<?php echo $token ?>" class="form-control">
+                                <input type="hidden" name="token_password" value="<?php echo $token_password ?>" class="form-control">
                             </div>
-                            <div class="form-group" id="password">
-                            	<?php
-									echo form_label('Contraseña','password', array('class' => 'control-label'));
-									echo form_input(array('type' => 'password', 'name' => 'password', 'placeholder' => '**********', 'class' => 'form-control', 'class' => 'form-control'));
-								?>
+                            <div class="form-group col-lg-12" id="password">
+                                <?php
+                                    echo form_label('Contraseña', 'password');
+                                    echo form_password(array('type' => 'password', 'name' => 'password', 'placeholder' => '**********', 'class' => 'form-control example1', 'id' => 'password1', 'value' => set_value('password')));
+                                ?>
+
+                                <span class="text-danger" style="display: none;"></span>
+                                <div class="pwstrength_viewport_progress" style="margin-top: 1em"></div>
+                            </div>
+                            <div class="form-group col-lg-12" id="confirm_password">
+                                <?php
+                                    echo form_label('Confirmar Contraseña', 'confirm_password');
+                                    echo form_password(array('type' => 'password', 'name' => 'confirm_password', 'placeholder' => '**********', 'class' => 'form-control', 'value' => set_value('confirm_password')));
+                                ?>
+
                                 <span class="text-danger" style="display: none;"></span>
                             </div>
                             <?php
-								echo form_submit('submit', 'Ingresar', array('class' => 'btn btn-success btn-block loginbtn'));
+								echo form_submit('submit', 'Recuperar', array('class' => 'btn btn-success btn-block loginbtn'));
 							?>
                         <?php
 							echo form_close();
 						?>
-                        <div style="margin-top: 1em;" class="text-center">
-                            <strong><a href="<?php echo base_url('users/recover'); ?>">Olvide mi contraseña</a></strong>
-                        </div>
                         <hr/>
                         <div class="text-center">
-                        	No tienes cuenta? registrate <strong><a href="<?php echo base_url('users/register'); ?>">aqui</a></strong>
+                        	No tienes cuenta? registrate <strong><a href="<?php echo base_url('auth/register'); ?>">aqui</a></strong>
                         </div>
                     </div>
                 </div>
@@ -107,12 +102,8 @@
             </div>
         </div>
     </div>
-
-    <!-- Animaciones con wow js (depende de animated.css y se debe crear el objeto en js) -->
-    <!--<div class="wowload rollIn" style="text-align: center;">
-        <h2>Esto es una prueba</h2>
-    </div>-->
+    <?= $modal_preloader ?>
     <?= $script ?>
-    <script type="text/javascript" src="<?php echo base_url();?>assets/js/users/login.js"></script>
+    <script type="text/javascript" src="<?php echo base_url();?>assets/js/auth/recover_password.js"></script>
 </body>
 </html>

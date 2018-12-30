@@ -30,7 +30,7 @@
 		event.preventDefault();
 
 		$.ajax({
-			'url': '../users/store',
+			'url': '../users/validate_create',
 			'type': 'POST',
 			'data': $(this).serialize(),
 			success: function(data)

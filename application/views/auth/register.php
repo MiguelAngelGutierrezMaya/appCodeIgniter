@@ -60,7 +60,7 @@
                     <div class="panel-body">
 						<div id="error"></div>
                     	<?php
-							echo form_open('users/validate_create',array('method' => 'post', 'id' => 'loginForm'));
+							echo form_open('auth/validate_create',array('method' => 'post', 'id' => 'loginForm'));
 						?>
 						<?= $user_create ?>
                         <div class="form-group col-lg-12" id="container_password">
@@ -86,6 +86,11 @@
 								<div class="g-recaptcha col-md-0" data-sitekey="6Le5m1IUAAAAAFhKmA0RExjRxu2pStAL83UTA5jj"></div>
 							</center>
 						</div>
+                        <center>
+                            <div id="google-recaptcha">
+                                <span></span>
+                            </div>
+                        </center>
 						<div class="text-center">
 							<?php
 								echo form_submit('submit', 'Registrar', array('class' => 'btn btn-success loginbtn'));
@@ -106,22 +111,8 @@
             </div>
         </div>
     </div>
-    <div id="WarningModalhdbgcl" class="modal modal-adminpro-general Customwidth-popup-WarningModal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header header-color-modal bg-color-3"></div>
-                <div class="modal-body" style="text-align: left;">
-                    <div class="preloader-wrapper">
-                        <div class="preloader">
-                            <img src="<?php echo base_url();?>assets/img/preloader.gif" alt="NILA">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer"></div>
-            </div>
-        </div>
-    </div>
+    <?= $modal_preloader ?>
     <?= $script ?>
-    <script type="text/javascript" src="<?php echo base_url();?>assets/js/users/register.js"></script>
+    <script type="text/javascript" src="<?php echo base_url();?>assets/js/auth/register.js"></script>
 </body>
 </html>

@@ -21,13 +21,14 @@
 			$("#container_password").attr('class', 'form-group col-lg-12');
 			$("#password > span").css("display", "none");
 			$("#confirm_password > span").css("display", "none");
+			$("#google-recaptcha > span").css("display", "none");
 			$("#error > div").css("display", "none");
 		}
 
 		event.preventDefault();
 
 		$.ajax({
-			'url': '../users/validate_create',
+			'url': 'validate_create',
 			'type': 'POST',
 			'data': $(this).serialize(),
 			success: function(data)
@@ -87,6 +88,10 @@
 							html(
 								'<div class="alert alert-danger" role="alert"><button id="button-error" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span>'+ user.msj +'</span></div>'
 							);
+
+						$("#google-recaptcha").attr('class', 'form-group-inner input-with-error col-lg-12');
+						$("#google-recaptcha > span").html(user.msj).removeAttr("style");
+						$("#google-recaptcha > span").css("color", "red");
 					}
 				},
 			} 
