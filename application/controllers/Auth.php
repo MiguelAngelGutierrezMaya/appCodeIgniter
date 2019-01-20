@@ -225,7 +225,7 @@ class Auth extends CI_Controller {
 			}
 			else
 			{
-				$secret = ''; //secret_key captcha
+				$secret = '6Le5m1IUAAAAAGEH1RTgnkWROzwHGOOxJlFJB84L'; //secret_key captcha
 				//$response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$captcha");
 
 				//url contra la que atacamos
