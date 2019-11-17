@@ -377,6 +377,11 @@ class Auth extends CI_Controller {
 		}
 	}
 
+	public function test()
+	{
+		$this->load->view('auth/test');
+	}
+
 	/**
 		Auth Aditional functions
 	**/

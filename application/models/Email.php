@@ -7,10 +7,8 @@ class Email extends CI_Model
 	        'protocol' => 'smtp',
 	        'smtp_host' => 'ssl://smtp.googlemail.com',
 	        'smtp_port' => 465,
-	        'smtp_user' => 'miguel.gutierrez@correounivalle.edu.co',
-	        'smtp_pass' => 'm1gu3l4ng3l',
-	        //'smtp_user' => 'example@example.com',
-	        //'smtp_pass' => '**********',
+	        'smtp_user' => 'example@example.com',
+	        'smtp_pass' => '**********',
 	        'mailtype'  => 'html',
 	        'charset'   => 'iso-8859-1'
 	    );
